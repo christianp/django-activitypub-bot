@@ -1,0 +1,18 @@
+{% load i18n %}
+<article class="note partial">
+    <header>
+        <a rel="author" href="{{note.actor.get_absolute_url}}">
+            {% if note.actor.icon_url %}
+            <img class="icon" src="{{note.actor.icon_url}}" alt="Account icon">
+            {% endif %}
+            <strong class="display-name">{{note.actor.display_name}}</strong>
+            <small class="address">{{note.actor.qualified_name}}</small>
+        </a>
+        <a class="time" href="{{note.get_absolute_url}}"><time>{{note.published_date}}</time></a>
+        <div class="stats">
+            <div class="likes">{% blocktranslate count likes=note.likes.count %}1 like{% plural %}{{likes}} likes{% endblocktranslate %}</div>
+            <div class="announces">{% blocktranslate count announces=note.announces.count %}1 boost{% plural %}{{announces}} boosts{% endblocktranslate %}</div>
+        </div>
+    </header>
+    <div class="content">{{note.content|safe}}</div>
+</article>

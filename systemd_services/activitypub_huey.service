@@ -1,0 +1,13 @@
+[Unit]
+Description=activitypub bot huey task runner
+Requires=activitypub.service
+After=network.target
+
+[Service]
+User=www-data
+Group=www-data
+WorkingDirectory=/srv/activitypub
+ExecStart=/srv/activitypub/venv/bin/python manage.py run_huey
+
+[Install]
+WantedBy=multi-user.target

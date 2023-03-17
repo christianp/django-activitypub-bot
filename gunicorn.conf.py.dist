@@ -1,0 +1,6 @@
+bind = "unix:/run/activitypub.sock"
+workers = 1
+accesslog = "/var/log/gunicorn/activitypub.access.log"
+errorlog = "/var/log/gunicorn/activitypub.error.log"
+capture_output = True
+loglevel = "debug"

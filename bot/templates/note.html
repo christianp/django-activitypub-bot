@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+
+{% block title %}{{note.actor.display_name}} - {{note.content}}{% endblock title %}
+
+{% block body %}
+<article class="note">
+    <header>
+        <a rel="author" href="{{note.actor.get_absolute_url}}">
+            {% if note.actor.icon_url %}
+            <img class="icon" src="{{note.actor.icon_url}}" alt="Account icon">
+            {% endif %}
+            <strong class="display-name">{{note.actor.display_name}}</strong>
+            <small class="address">{{note.actor.qualified_name}}</small>
+        </a>
+        <a class="time" href="{{note.get_absolute_url}}"><time>{{note.published_date}}</time></a>
+        <div class="stats">
+            <div class="likes">{% blocktranslate count likes=note.likes.count %}1 like{% plural %}{{likes}} likes{% endblocktranslate %}</div>
+            <div class="announces">{% blocktranslate count announces=note.announces.count %}1 boost{% plural %}{{announces}} boosts{% endblocktranslate %}</div>
+            {% if note.in_reply_to %}
+            <div class="in-reply-to">In reply to <a href="{{note.in_reply_to.get_absolute_url}}">{{note.in_reply_to.actor.display_name}}</a></div>
+            {% endif %}
+        </div>
+    </header>
+    <div class="content">{{note.content|safe}}</div>
+</article>
+{% if note.replies.exists %}
+<section id="replies">
+    <h2>{% blocktranslate count replies=note.replies.count %}1 reply{% plural %}{{replies}} replies{% endblocktranslate %}</h2>
+{% for reply in note.replies.all reversed %}
+{% include "note_partial.html" with note=reply %}
+{% endfor %}
+</section>
+{% endif %}
+{% endblock body %}

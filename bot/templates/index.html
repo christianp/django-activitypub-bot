@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block body %}
+    <ul>
+        {% for account in accounts %}
+        <li>
+            <a href="{{account.get_absolute_url}}">{{account}}</a>
+        </li>
+        {% endfor %}
+    </ul>
+{% endblock body %}

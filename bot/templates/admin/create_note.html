@@ -1,0 +1,12 @@
+{% extends "admin/base_site.html" %}
+{% block content %}
+<form method="POST">
+    {% csrf_token %}
+    {{form.local_actor.as_hidden}}
+    {{form.content.label}}
+    {{form.content}}
+    <div>
+        <button type="submit">Submit</button>
+    </div>
+</form>
+{% endblock %}

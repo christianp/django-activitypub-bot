@@ -1,0 +1,137 @@
+:root {
+    --grid-gap: 0.5em;
+    --padding: 1em;
+    --bg: hsl(48, 100%, 95%);
+    --bg2: hsl(240, 100%, 95%);
+    --text-width: 50em;
+}
+
+body {
+    font-family: sans-serif;
+    max-width: var(--text-width);
+    margin: 0 auto;
+    padding: 2rem 0;
+}
+
+article.note {
+    display: grid;
+    grid-gap: var(--grid-gap);
+    grid-template:
+    "header"
+    "content"
+    ;
+    max-width: var(--text-width);
+    margin-left: auto;
+    margin-right: auto;
+    background: var(--bg);
+}
+
+article.note > header {
+    display: grid;
+    grid-area: header;
+    grid-gap: var(--grid-gap);
+    padding: 0.5em 1em;
+    background: var(--bg2);
+    grid-template:
+    "author time"
+    "stats stats"
+    /
+    1fr auto;
+    line-height: 1em;
+}
+
+
+article.note > header a[rel="author"] {
+    grid-area: author;
+    display: grid;
+    grid-gap: var(--grid-gap);
+    grid-template:
+    "icon display-name" auto
+    "icon address" 1fr
+    /
+    auto 1fr
+    ;
+}
+article.note > header a[rel="author"] .icon {
+    --icon-size: 5rem;
+    width: var(--icon-size);
+    height: var(--icon-size);
+    object-fit: cover;
+    grid-area: icon;
+    border-radius: calc(0.15 * var(--icon-size));
+}
+article.note.partial > header a[rel="author"] .icon {
+    --icon-size: 2rem;
+}
+article.note > header a[rel="author"] .display-name { grid-area: display-name; }
+article.note > header a[rel="author"] .address { grid-area: address; }
+
+article.note > header .time {
+    grid-area: time;
+    justify-self: end;
+}
+
+article.note > .content {
+    padding: var(--padding);
+}
+
+article.note > header > .stats {
+    display: flex;
+    grid-gap: 1em;
+}
+
+article.note.partial {
+    margin-bottom: 2em;
+    grid-template:
+    "content"
+    "header"
+    ;
+}
+
+body.profile > header {
+    max-width: var(--text-width);
+    margin: 0 auto 5rem auto;
+    display: grid;
+    margin-bottom: 5rem;
+    grid-template:
+    "icon name"
+    "icon summary"
+    "properties properties"
+    /
+    auto 1fr
+    ;
+    grid-gap: 1em;
+}
+body.profile > header > h1 {
+    grid-area: name;
+    margin:0;
+}
+body.profile > header > #account-icon {
+    width: 10vw;
+    grid-area: icon;
+    object-fit: cover;
+}
+body.profile > header > #properties {
+    grid-area: properties;
+}
+body.profile > header > #properties > dt {
+    font-weight: bold;
+}
+body.profile > header > #properties > dd ~ dt {
+    margin-top: 1em;
+}
+
+body.profile > header > h1 .address {
+    font-size: 1rem;
+    font-style: italic;
+}
+
+.pagination {
+    margin-top: 5rem;
+    display: grid;
+    grid-gap: 1em;
+    grid-template: "previous . current . next" / auto 1fr auto 1fr auto;
+}
+.pagination .previous {grid-area: previous;}
+.pagination .current {grid-area: current;}
+.pagination .next {grid-area: next;}

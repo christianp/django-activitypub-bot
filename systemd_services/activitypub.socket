@@ -1,0 +1,8 @@
+[Unit]
+Description=activitypub gunicorn socket
+
+[Socket]
+ListenStream=/run/activitypub.sock
+
+[Install]
+WantedBy=sockets.target

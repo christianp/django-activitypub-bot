@@ -1,0 +1,9 @@
+{% extends 'admin/change_form.html' %}
+
+{% block submit_buttons_bottom %}
+    {{ block.super }}
+    {% if object_id %}
+    <a href="{% url 'admin:admin_create_note' pk=object_id %}">Create a note</a>
+    <a href="{% url 'admin:admin_mentions' pk=object_id %}">See mentions</a>
+    {% endif %}
+{% endblock %}

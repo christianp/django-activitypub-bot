@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block body %}
+<main>
+    {% for note in object.mentions.all %}
+    {% include "note_partial.html" %}
+    {% endfor %}
+</main>
+{% endblock body %}

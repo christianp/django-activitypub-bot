@@ -1,0 +1,15 @@
+[Unit]
+Description=activitypub bot gunicorn daemon
+Requires=activitypub.socket
+After=network.target
+
+[Service]
+User=www-data
+Group=www-data
+WorkingDirectory=/srv/activitypub
+ExecStart=/srv/activitypub/venv/bin/gunicorn \
+          -c /srv/activitypub/gunicorn.conf.py \
+          activitypub_bot.wsgi:application
+
+[Install]
+WantedBy=multi-user.target

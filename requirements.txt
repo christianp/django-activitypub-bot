@@ -1,0 +1,7 @@
+Django
+cryptography
+pycryptodome
+python-dateutil
+requests
+gunicorn
+huey

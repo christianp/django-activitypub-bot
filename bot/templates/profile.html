@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+
+{% block title %}{{actor.display_name}}{% endblock title %}
+
+{% block body_class %}profile {{block.super}}{% endblock body_class %}
+
+{% block body %}
+
+{% block header %}
+    <header>
+        <h1>
+            <a href="{{actor.get_absolute_url}}">
+                <span class="display-name">{{actor.display_name}}</span>
+                <br>
+                <small class="address">{{actor.qualified_name}}</small>
+            </a>
+        </h1>
+        <img id="account-icon" alt="Account icon" src="{{actor.icon_url}}">
+        <div class="summary">{{profile.summary|safe}}</div>
+        <dl id="properties">
+            <dt>{% translate "Followers" %}</dt>
+            <dd>{{actor.followers.count}}</dd>
+
+            {% for attachment in profile.attachment %}
+            {% if attachment.type == 'PropertyValue' %}
+            <dt>{{attachment.name}}</dt>
+            <dd>{{attachment.value|safe}}</dd>
+            {% endif %}
+            {% endfor %}
+        </dl>
+    </header>
+{% endblock header %}
+
+{% block main %}
+<main>
+    {% for note in page %}
+        {% include "note_partial.html" %}
+    {% endfor %}
+
+    <nav class="pagination">
+        {% if page.has_previous %}
+        <a class="previous" href="?page={{page.previous_page_number}}">{% translate "Newer posts" %}</a>
+        {% endif %}
+
+        <span class="current">
+            {% blocktranslate with page_number=page.number num_pages=page.paginator.num_pages %}Page {{page_number}} of {{num_pages}}{% endblocktranslate %}
+        </span>
+
+        {% if page.has_next %}
+        <a class="next" href="?page={{page.next_page_number}}">{% translate "Older posts" %}</a>
+        {% endif %}
+    </nav>
+</main>
+{% endblock main %}
+{% endblock body %}
