@@ -6,7 +6,7 @@ from bot.views import testview, webfinger
 urlpatterns = [
     path('', testview, name='test'),
     path('account/', include('bot.urls')),
-    path('admin', admin.site.urls),
+    path('admin/', admin.site.urls),
 ]
 
 urlpatterns += [path(f'{appname}/', include(f'{appname}.urls', namespace=appname)) for appname in settings.ACTIVITYPUB_APPS]
