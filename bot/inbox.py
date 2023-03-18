@@ -86,6 +86,12 @@ class InboxHandler(AbstractInboxHandler):
     def handle_undo_Like(self, activity):
         tasks.remove_like(self.actor, activity)
 
+    def handle_Announce(self, activity):
+        tasks.add_announce(self.actor, activity)
+
+    def handle_undo_Announce(self, activity):
+        tasks.remove_announce(self.actor, activity)
+
     @activitystreams.with_context([activitystreams.ACTIVITYSTREAMS_CONTEXT, activitystreams.SECURITY_CONTEXT])
     def accept_message(self, activity):
         return activitystreams.add_unique_id(self.actor.domain, {

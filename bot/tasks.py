@@ -42,6 +42,20 @@ def remove_like(actor, activity):
     note.likes.remove(remote_actor)
 
 @task()
+def add_announce(actor, activity):
+    from .models import Note, RemoteActor
+    note = Note.objects.get_by_absolute_url(activity['object'])
+    remote_actor = RemoteActor.objects.get_by_url(activity['actor'])
+    note.announces.add(remote_actor)
+
+@task()
+def remove_announce(actor, activity):
+    from .models import Note, RemoteActor
+    note = Note.objects.get_by_absolute_url(activity['object']['object'])
+    remote_actor = RemoteActor.objects.get_by_url(activity['actor'])
+    note.announces.remove(remote_actor)
+
+@task()
 def save_mention(recipient, activity):
     from .models import Note, RemoteActor
 
