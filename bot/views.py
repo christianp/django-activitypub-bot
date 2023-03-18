@@ -26,8 +26,6 @@ def webfinger(request):
     m = re.match(r'^acct:(?P<username>.+?)@(?P<domain>.+)$', resource)
     username = m.group('username')
     domain = m.group('domain')
-    with open('/tmp/poo', 'w') as f:
-        f.write(f'{username}@{domain}')
     try:
         actor = LocalActor.objects.get(username = username, domain = domain)
     except LocalActor.DoesNotExist:
