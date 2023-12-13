@@ -5,3 +5,4 @@ python-dateutil
 requests
 gunicorn
 huey
+bs4
