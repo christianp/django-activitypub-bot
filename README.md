@@ -98,7 +98,7 @@ You'll be asked to choose the domain it should exist on, and to give a username.
 
 You can write a post through the admin interface: click on *Local actors*, then on the actor you want to create the post, and then click the *Create a note* link at the bottom of the page.
 
-Alternately, if you created an API access token, you can make a POST request to `https://{DOMAIN}/activitypub/accounts/{USERNAME}/create_note`.
+Alternately, if you created an API access token, you can make a POST request to `https://{DOMAIN}/activitypub/account/{USERNAME}/create_note`.
 The request should have the header `Authorization: Bearer {ACCESS_TOKEN}`, and a POST parameter `content` with the text of the post.
 
 ## Inbox handlers
