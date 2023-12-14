@@ -46,7 +46,7 @@ def fetch_remote_profile(url):
     res = requests.get(
         url,
         headers = {
-            'Accept': 'application/jrd+json',
+            'Accept': 'application/json',
         }
     )
     profile_data = res.json()
