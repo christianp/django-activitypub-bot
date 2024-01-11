@@ -104,7 +104,7 @@ class ProfileView(ActorView):
         if self.request.accepts('text/html'):
             return render(self.request, self.get_template_names(), {'actor': actor, 'profile': actor.actor_json(), 'page': page,})
         else:
-            return JsonResponse(actor.actor_json(), content_type='application/activity+json'))
+            return JsonResponse(actor.actor_json(), content_type='application/activity+json')
 
 class UpdateProfileView(ActorView):
     http_method_names = ['post']
