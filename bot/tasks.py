@@ -18,9 +18,7 @@ def send_message(inbox_url, message, private_key_pem, public_key_url):
 @task()
 def add_follower(actor, follower_url, accept_message):
     from .models import RemoteActor
-    pprint(accept_message)
     remote_actor = RemoteActor.objects.get_by_url(actor, follower_url)
-    print(remote_actor.get_inbox_url())
     actor.followers.add(remote_actor)
 
     actor.send_signed_message(remote_actor.get_inbox_url(), accept_message)
