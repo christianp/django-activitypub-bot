@@ -1,3 +1,4 @@
+from pprint import pprint
 from   . import activitystreams
 from   . import tasks
 from   .absolute_url import absolute_reverse
@@ -38,8 +39,18 @@ class AbstractInboxHandler:
         if obj.get('type') != 'Note':
             return
         
-        mentions_me = any(t for t in obj.get('tag',[]) if t.get('type') == 'Mention' and t.get('href') == self.actor.get_absolute_url())
+        pprint(activity)
+
+        # don't understand if list is optional here. doesn't work in gotosocial
+        tag = obj.get("tag")
+        if type(tag) == dict:
+            tag = [tag,]
+        
+        mentions_me = any([t for t in tag if t.get('type') == 'Mention' and t.get('href') == self.actor.get_absolute_url()])
+        
+        
         if mentions_me:
+            print("MENTIONS ME")
             self.handle_mention(activity)
 
     def handle_mention(self, activity):
@@ -48,6 +59,7 @@ class AbstractInboxHandler:
         """
 
         tasks.save_mention(self.actor, activity)
+
 
 class InboxHandler(AbstractInboxHandler):
     """
@@ -61,6 +73,7 @@ class InboxHandler(AbstractInboxHandler):
             raise Exception('This request is missing the actor field')
 
         tasks.add_follower(self.actor, follower, self.accept_message(activity))
+        print(activity)
 
         return {'ok': True}
 

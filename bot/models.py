@@ -1,3 +1,4 @@
+from   .send_signed_message import authorized_fetch
 from   . import activitystreams
 from   . import tasks
 from   . import webfinger
@@ -223,11 +224,11 @@ class RemoteActorManager(models.Manager):
             profile = profile_data,
         )
 
-    def get_by_url(self, url):
+    def get_by_url(self, actor, url):
         try:
             return self.get(url=url)
         except RemoteActor.DoesNotExist:
-            profile_data = webfinger.fetch_remote_profile(url)
+            profile_data = authorized_fetch(url, actor.private_key, actor.get_public_key_url())
             return self.create_from_profile_data(profile_data)
 
     def get_by_username_domain(self, username, domain):
