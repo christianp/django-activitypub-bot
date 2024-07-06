@@ -5,6 +5,14 @@ from   huey.contrib.djhuey import task
 import json
 from pprint import pprint
 
+def task():
+    def inner(func):
+        def moreinner(*args, **kwargs):
+            func(*args, **kwargs)
+
+        return moreinner
+    return inner
+
 @task()
 def update_profile(actor):
     actor.update_profile()
