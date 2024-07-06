@@ -1,6 +1,7 @@
 # from https://github.com/HelgeKrueger/bovine/blob/975855232b74dca2a6f55358a9f3f5647e9c0717/bovine/clients/signed_http.py
 
 import base64
+from pprint import pprint
 from cryptography.hazmat.primitives import hashes, serialization
 from cryptography.hazmat.primitives.asymmetric import padding, rsa
 from cryptography.hazmat.primitives.serialization import (load_pem_private_key,load_pem_public_key)
@@ -68,6 +69,7 @@ def build_signature(host, method, target):
         .with_field("(request-target)", f"{method} {target}")
         .with_field("host", host)
     )
+
 def signed_post(url, private_key, public_key_url, headers = None, body = None):
     headers = {} if headers is None else headers
 
@@ -99,5 +101,29 @@ def signed_post(url, private_key, public_key_url, headers = None, body = None):
 
     response = requests.post(url, data = body, headers = headers)
     print(f"Sent to {url}!")
-    print(response)
     return response
+
+def authorized_fetch(url, private_key, public_key_url, headers = None):
+    headers = {} if headers is None else headers
+
+    parsed_url = urlparse(url)
+    host = parsed_url.netloc
+    target = parsed_url.path
+
+    content_type = "application/activity+json"
+    date_header = get_gmt_now()
+
+    signature_header = (
+        build_signature(host, "get", target)
+        .with_field("date", date_header)
+        .build_signature(public_key_url, private_key)
+    )
+
+    headers["date"] = date_header
+    headers["host"] = host
+    headers["content-type"] = content_type
+    headers["signature"] = signature_header
+
+    response = requests.get(url, headers = headers)
+
+    return response.json()

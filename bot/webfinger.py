@@ -42,11 +42,16 @@ def webfinger(username, domain):
 
     return data
 
-def fetch_remote_profile(url):
+def make_signature(keyID, headers, signature):
+    return
+
+def fetch_remote_profile(url, actor):
+    res = actor.send_signed_message(url, "")
+    print(res)
     res = requests.get(
         url,
         headers = {
-            'Accept': 'application/json',
+            'Accept': 'application/ld+json',
         }
     )
     profile_data = res.json()
