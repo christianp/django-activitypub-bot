@@ -88,5 +88,6 @@ settings.py
 
 .env
 db.sqlite3
+huey.sqlite3
 
 actors/
