@@ -272,8 +272,8 @@ class Follower(models.Model):
             models.UniqueConstraint(fields=('remote_actor','following'), name='unique_followers_per_actor')
         ]
 
-reserved = ':\/\?#\[\]@!\$\&\'\(\)\*\+,;=\s'
-re_mention = re.compile(r'(?<!\S)@(?P<username>[^'+reserved+']+)@(?P<domain>[^'+reserved+']+)(?<!\.)(?=$|\.|['+reserved+'])')
+reserved = r':/\?#\[\]@!\$\&\'\(\)\*\+,;=\s'
+re_mention = re.compile(r'(?<!\S)@(?P<username>[^'+reserved+']+)@(?P<domain>[^'+reserved+r']+)(?<!\.)(?=$|\.|['+reserved+'])')
 
 def nl2br(data):
     content = data.get('content', '')
