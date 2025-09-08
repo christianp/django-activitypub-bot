@@ -98,6 +98,4 @@ def signed_post(url, private_key, public_key_url, headers = None, body = None):
     headers["user-agent"] = "CLPs activitypub bot"
 
     response = requests.post(url, data = body, headers = headers)
-    print(f"Sent to {url}!")
-    print(response)
     return response

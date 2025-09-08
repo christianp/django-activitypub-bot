@@ -33,7 +33,6 @@ class AbstractInboxHandler:
         """
             Generic method to handle mentions when a Create activity is received.
         """
-        print("Create activity")
         obj = activity.get('object',{})
         if obj.get('type') != 'Note':
             return

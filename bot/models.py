@@ -161,7 +161,6 @@ class LocalActor(AbstractActor):
         return absolute_reverse('user_outbox', username=self.username, domain=self.domain)
 
     def send_to_followers(self, message):
-        print("Sending\n"+json.dumps(message, indent=2))
         self.distribute_message(message, self.followers.all())
 
     def get_public_key_url(self):
@@ -291,7 +290,6 @@ def apply_mentions(data):
         domain = m.group('domain')
         mentioned.append((username, domain))
 
-    print(mentioned)
     unique_mentioned = {}
     for (username, domain) in mentioned:
         try:

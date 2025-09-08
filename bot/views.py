@@ -134,14 +134,12 @@ class InboxView(CSRFExemptMixin, ActorView):
 
         for inbox_handler in inbox_handlers:
             try:
-                print(inbox_handler,"handling")
                 hresult = inbox_handler.handle(activity)
-                print("Activity result:",result)
                 if hresult is not None:
                     result = hresult
 
             except InboxException as e:
-                print("Inbox error: ",e)
+                pass
 
         if result is not None:
             return JsonResponse(result)

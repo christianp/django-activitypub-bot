@@ -10,7 +10,6 @@ def update_profile(actor):
 
 @task()
 def send_message(inbox_url, message, private_key_pem, public_key_url):
-    print(f"Sending to {inbox_url}:\n{json.dumps(message,indent=4)}")
     signed_post(inbox_url, private_key_pem, public_key_url, body = json.dumps(message))
 
 @task()
